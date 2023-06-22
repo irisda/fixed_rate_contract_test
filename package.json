@@ -11,5 +11,9 @@
   },
   "scripts": {
     "wdio": "wdio run ./wdio.conf.js"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.8",
+    "unique-names-generator": "^4.7.1"
   }
 }
