@@ -1,11 +1,16 @@
 import LoginPage from '../pageobjects/login.page.js'
-import globalConfig from '../customConfig.js'
+import {globalConfig} from '../customConfig.js'
 
-describe('My Login application', async () => {
+describe('Login Page Validation', async () => {
 
     beforeEach(async () => {
         await LoginPage.open(globalConfig.baseUrl)
 
+    })
+
+    it('Verify we are on login page', async () => {
+        await LoginPage.verifyLogin()
+        await expect(browser).toHaveUrlContaining('login')
     })
 
 
@@ -13,7 +18,7 @@ describe('My Login application', async () => {
         await LoginPage.login(globalConfig.email, globalConfig.password)
        
         //Wait for the browser to loaded
-        await browser.pause(1000)
+        await browser.pause(3000)
         const getBrowserUrl = await browser.getUrl()
 
         if (getBrowserUrl.includes('setup/authenticator')) {
@@ -23,17 +28,11 @@ describe('My Login application', async () => {
 
     })
 
-    it('should be able to see create contract properties', async () => {
-        await LoginPage.checkContractsBtn()
-        await expect(browser).toHaveUrlContaining('contractor')
-
-        await LoginPage.validateAddNewContract()
-
-        await expect(await LoginPage.createFixedContractHeadline.getText()).toBe('Creating a fixed contract')
-        await browser.pause(90000)
-
-
+    it('should logout from deel platform', async () => {
+        await expect(browser).toHaveUrlContaining('training')
+        await LoginPage.logoutFromSystem()
     })
+    
 })
 
 

@@ -10,7 +10,8 @@
     "wdio-chromedriver-service": "^8.1.1"
   },
   "scripts": {
-    "wdio": "wdio run ./wdio.conf.js"
+    "test": "npx wdio run wdio.conf.js",
+    "report": "allure serve allure-results"
   },
   "dependencies": {
     "dayjs": "^1.11.8",

@@ -1,3 +1,4 @@
+
 export const config = {
     //
     // ====================
@@ -25,6 +26,16 @@ export const config = {
     specs: [
         './test/specs/**/*.js'
     ],
+    suites: {
+        loginPage: ['./test/specs/login.test.js'],
+        mainPage:['./test/specs/home.page.js'],
+        createContractPage:['./test/specs/createContractPage.test'],
+        createFixedRateContract: ['./test/specs/createAFixedRateContractPage.test.js'],
+        createPayAsYouGoContract: ['./test/specs/createPayAsYouGoContractPage.test.js'],
+        contractNameNegativeTesting: ['../test/specs/contractNameNegative.test.js'],
+        scopeOfWorkNegativeTesting: ['../test/specs/scopeOfWorkNegative.test.js'],
+        paymentRateNegativeTesting: ['..test/specs/paymentRateNegative.test.js']
+    },
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -52,8 +63,8 @@ export const config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        // capabilities for local browser web tests
-        browserName: 'chrome' // or "firefox", "microsoftedge", "safari"
+        // capabilities for browser web tests
+        browserName: 'chrome',// or "firefox", "microsoftedge", "safari"
     }],
     //
     // ===================
@@ -62,7 +73,7 @@ export const config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'trace',
     //
     // Set specific log levels per logger
     // loggers:
@@ -210,8 +221,11 @@ export const config = {
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)
      */
-    // beforeHook: function (test, context) {
-    // },
+    before: function () {
+        browser.overwriteCommand('clearValue', function () {
+            browser.execute((elem) => (elem.value = ''), this)
+        }, true)
+    },
     /**
      * Hook that gets executed _after_ a hook within the suite starts (e.g. runs after calling
      * afterEach in Mocha)
